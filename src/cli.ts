@@ -1,4 +1,5 @@
 import { Command } from "commander";
+import { printBanner } from "./ui/banner.js";
 
 export function createCli() {
   const program = new Command()
@@ -10,6 +11,11 @@ export function createCli() {
     .command("hello")
     .description("greetings")
     .action(() => console.log("world"));
+
+  program
+    .command("banner")
+    .description("show banner")
+    .action(() => printBanner());
 
   program.action(() => {
     program.help();
