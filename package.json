@@ -15,6 +15,7 @@
   "type": "module",
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.3.287",
+    "@inquirer/prompts": "^8.7.2",
     "boxen": "^9.0.0",
     "chalk": "^6.0.1",
     "commander": "^15.0.0",
