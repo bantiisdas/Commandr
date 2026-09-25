@@ -4,6 +4,7 @@ import { RequireApiKey } from "./config/env.js";
 import chalk from "chalk";
 import { runQuery } from "./agent/run-query.js";
 import { parseCliMode, type CliMode } from "./agent/modes.js";
+import { startChat } from "./commands/chat.js";
 
 function parseMode(value: string): CliMode {
   const mode = parseCliMode(value);
@@ -63,6 +64,19 @@ export function createCli() {
         });
       },
     );
+
+  program
+    .command("chat")
+    .description("start interactive chat session")
+    .option("-m, --mode <mode>", "agent|ask|plan", "agent")
+    .option("-v, --verbose", "show agent loop message type", false)
+    .action(async (options: { mode: string; verbose: boolean }) => {
+      RequireApiKey();
+      await startChat({
+        mode: parseMode(options.mode),
+        verbose: options.verbose,
+      });
+    });
 
   program
     .command("banner")
