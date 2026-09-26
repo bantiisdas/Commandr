@@ -5,6 +5,7 @@ import chalk from "chalk";
 import { runQuery } from "./agent/run-query.js";
 import { parseCliMode, type CliMode } from "./agent/modes.js";
 import { startChat } from "./commands/chat.js";
+import { wakeUp } from "./commands/wake-up.js";
 
 function parseMode(value: string): CliMode {
   const mode = parseCliMode(value);
@@ -52,18 +53,9 @@ export function createCli() {
   program
     .command("wakeup")
     .description("Send one shot prompt to the agent")
-    .argument("<prompt>", "what to ask to the agent")
-    .option("-m, --mode <mode>", "agent|ask|plan", "agent")
-    .option("-v, --verbose", "show agent loop message type", false)
-    .action(
-      async (prompt: string, options: { mode: string; verbose?: boolean }) => {
-        RequireApiKey();
-        await runQuery(prompt, {
-          mode: parseMode(options.mode),
-          verbose: options.verbose,
-        });
-      },
-    );
+    .action(async () => {
+      await wakeUp();
+    });
 
   program
     .command("chat")
